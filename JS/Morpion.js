@@ -116,11 +116,11 @@ document.addEventListener('DOMContentLoaded', function() {
   };
   
   function main() {
-    var pions = document.querySelectorAll("#Jeu button");
+    var pions = document.querySelectorAll("#Corps_Jeu button");
     var joueurs = ["X", "O"];
     var tour = 0;
     var jeuEstFini = false;
-    var afficheur = new Afficheur(document.querySelector("#StatutJeu"));
+    var afficheur = new Afficheur(document.querySelector("#InfoJeu"));
     afficheur.sendMessage(
       "Le jeu peut commencer ! <br /> Joueur " +
         joueurs[tour] +
