@@ -1,4 +1,5 @@
-function estValide(button) {
+document.addEventListener('DOMContentLoaded', function() {
+  function estValide(button) {
     return button.innerHTML.length == 0;
   }
   
@@ -164,4 +165,4 @@ function estValide(button) {
   }
   
   main();
-  
+});
