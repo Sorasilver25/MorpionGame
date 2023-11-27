@@ -1,4 +1,13 @@
 $(document).ready(function() {
+
+    var afficheur = new Afficheur($("#InfoJeu"));
+    var pions = $("#Corps_Jeu button");
+    var prenomJoueurX = $("#prenomJoueurX").val().trim() || "Joueur X";
+    var prenomJoueurO = $("#prenomJoueurO").val().trim() || "Joueur O";
+    var joueurs = ["X", "O"];
+    var tour = 0;
+    var jeuEstFini = false;
+
   function estValide(button) {
     return $(button).html().length === 0;
   }
@@ -36,6 +45,15 @@ $(document).ready(function() {
     }
     return true;
 }
+  $("#prenomJoueurX").on("blur", function() {
+    prenomJoueurX = $(this).val() || "Joueur X";
+    afficheur.sendMessage("<br />" + getNomJoueur(tour, prenomJoueurX, prenomJoueurO) + " c'est votre tour.");
+  });
+
+  $("#prenomJoueurO").on("blur", function() {
+    prenomJoueurO = $(this).val() || "Joueur O";
+    afficheur.sendMessage("<br />" + getNomJoueur(tour, prenomJoueurX, prenomJoueurO) + " c'est votre tour.");
+  });
 
   function Afficheur(element) {
     var affichage = element;
@@ -47,52 +65,39 @@ $(document).ready(function() {
     return { sendMessage: setText };
   }
 
+  function getNomJoueur(tour, prenomJoueurX, prenomJoueurO) {
+    return (tour === 0) ? prenomJoueurX : prenomJoueurO;
+  }
+
   function main() {
-    var pions = $("#Corps_Jeu button");
-    var joueurs = ["X", "O"];
-    var tour = 0;
-    var jeuEstFini = false;
-    var afficheur = new Afficheur($("#InfoJeu"));
-    afficheur.sendMessage(
-        "Le jeu peut commencer ! <br /> Joueur " +
-        joueurs[tour] +
-        " c'est votre tour."
-    );
+    afficheur.sendMessage("Le jeu peut commencer ! <br />" + getNomJoueur(tour, prenomJoueurX, prenomJoueurO) + " c'est votre tour.");
+
     pions.on("click", function() {
-        if (jeuEstFini) return;
+      if (jeuEstFini) return;
 
-        if (!estValide(this)) {
-            afficheur.sendMessage(
-                "Case occupée ! <br />Joueur " +
-                joueurs[tour] +
-                " c'est toujours à vous !"
-            );
-        } else {
-            setSymbol(this, joueurs[tour]);
-            jeuEstFini = rechercherVainqueur(pions, joueurs, tour);
+      if (!estValide(this)) {
+        afficheur.sendMessage("Case occupée ! <br />" + getNomJoueur(tour, prenomJoueurX, prenomJoueurO) + " c'est toujours à vous !");
+      } else {
+        setSymbol(this, joueurs[tour]);
+        jeuEstFini = rechercherVainqueur(pions, joueurs, tour);
 
-            if (jeuEstFini) {
-                afficheur.sendMessage(
-                    "Le joueur " +
-                    joueurs[tour] +
-                    ' a gagné ! <br /> <a href="Programme_Principal.html">Rejouer</a>'
-                );
-                return;
-            }
-
-            if (matchNul(pions)) {
-                afficheur.sendMessage(
-                    'Match Nul ! <br/> <a href="Programme_Principal.html">Rejouer</a>'
-                );
-                return;
-            }
-
-            tour++;
-            tour = tour % 2;
-            afficheur.sendMessage("Joueur " + joueurs[tour] + " c'est à vous !");
+        if (jeuEstFini) {
+          afficheur.sendMessage(getNomJoueur(tour, prenomJoueurX, prenomJoueurO) +' a gagné ! <br /> <a href="Programme_Principal.html">Rejouer</a>');
+          return;
         }
+
+        if (matchNul(pions)) {
+          afficheur.sendMessage(
+            'Match Nul ! <br/> <a href="Programme_Principal.html">Rejouer</a>'
+          );
+          return;
+        }
+
+        tour = (tour + 1) % 2; // Alterner entre les joueurs X et O
+        afficheur.sendMessage( getNomJoueur(tour, prenomJoueurX, prenomJoueurO) + " c'est à vous !");
+      }
     });
-}
+  }
 
 main();
 });
