@@ -1,168 +1,98 @@
-document.addEventListener('DOMContentLoaded', function() {
+$(document).ready(function() {
   function estValide(button) {
-    return button.innerHTML.length == 0;
+    return $(button).html().length === 0;
   }
   
   function setSymbol(btn, symbole) {
-    btn.innerHTML = symbole;
+    $(btn).html(symbole);
   }
   
   function rechercherVainqueur(pions, joueurs, tour) {
-    if (
-      pions[0].innerHTML == joueurs[tour] &&
-      pions[1].innerHTML == joueurs[tour] &&
-      pions[2].innerHTML == joueurs[tour]
-    ) {
-      pions[0].style.backgroundColor = "#9ACD32";
-      pions[1].style.backgroundColor = "#9ACD32";
-      pions[2].style.backgroundColor = "#9ACD32";
-      return true;
+    const combinations = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8], // lignes
+        [0, 3, 6], [1, 4, 7], [2, 5, 8], // colonnes
+        [0, 4, 8], [2, 4, 6] // diagonales
+    ];
+
+    for (const combination of combinations) {
+        const [a, b, c] = combination;
+        if (
+            $(pions[a]).html() == joueurs[tour] &&
+            $(pions[b]).html() == joueurs[tour] &&
+            $(pions[c]).html() == joueurs[tour]
+        ) {
+            $(pions[a]).css("backgroundColor", "#9ACD32");
+            $(pions[b]).css("backgroundColor", "#9ACD32");
+            $(pions[c]).css("backgroundColor", "#9ACD32");
+            return true;
+        }
     }
-  
-    if (
-      pions[3].innerHTML == joueurs[tour] &&
-      pions[4].innerHTML == joueurs[tour] &&
-      pions[5].innerHTML == joueurs[tour]
-    ) {
-      pions[3].style.backgroundColor = "#9ACD32";
-      pions[4].style.backgroundColor = "#9ACD32";
-      pions[5].style.backgroundColor = "#9ACD32";
-      return true;
-    }
-  
-    if (
-      pions[6].innerHTML == joueurs[tour] &&
-      pions[7].innerHTML == joueurs[tour] &&
-      pions[8].innerHTML == joueurs[tour]
-    ) {
-      pions[6].style.backgroundColor = "#9ACD32";
-      pions[7].style.backgroundColor = "#9ACD32";
-      pions[8].style.backgroundColor = "#9ACD32";
-      return true;
-    }
-  
-    if (
-      pions[0].innerHTML == joueurs[tour] &&
-      pions[3].innerHTML == joueurs[tour] &&
-      pions[6].innerHTML == joueurs[tour]
-    ) {
-      pions[0].style.backgroundColor = "#9ACD32";
-      pions[3].style.backgroundColor = "#9ACD32";
-      pions[6].style.backgroundColor = "#9ACD32";
-      return true;
-    }
-  
-    if (
-      pions[1].innerHTML == joueurs[tour] &&
-      pions[4].innerHTML == joueurs[tour] &&
-      pions[7].innerHTML == joueurs[tour]
-    ) {
-      pions[1].style.backgroundColor = "#9ACD32";
-      pions[4].style.backgroundColor = "#9ACD32";
-      pions[7].style.backgroundColor = "#9ACD32";
-      return true;
-    }
-  
-    if (
-      pions[2].innerHTML == joueurs[tour] &&
-      pions[5].innerHTML == joueurs[tour] &&
-      pions[8].innerHTML == joueurs[tour]
-    ) {
-      pions[2].style.backgroundColor = "#9ACD32";
-      pions[5].style.backgroundColor = "#9ACD32";
-      pions[8].style.backgroundColor = "#9ACD32";
-      return true;
-    }
-  
-    if (
-      pions[0].innerHTML == joueurs[tour] &&
-      pions[4].innerHTML == joueurs[tour] &&
-      pions[8].innerHTML == joueurs[tour]
-    ) {
-      pions[0].style.backgroundColor = "#9ACD32";
-      pions[4].style.backgroundColor = "#9ACD32";
-      pions[8].style.backgroundColor = "#9ACD32";
-      return true;
-    }
-  
-    if (
-      pions[2].innerHTML == joueurs[tour] &&
-      pions[4].innerHTML == joueurs[tour] &&
-      pions[6].innerHTML == joueurs[tour]
-    ) {
-      pions[2].style.backgroundColor = "#9ACD32";
-      pions[4].style.backgroundColor = "#9ACD32";
-      pions[6].style.backgroundColor = "#9ACD32";
-      return true;
-    }
+    return false;
   }
   
   function matchNul(pions) {
     for (var i = 0, len = pions.length; i < len; i++) {
-      if (pions[i].innerHTML.length == 0) return false;
+        if ($(pions[i]).html().length == 0) return false;
     }
-  
     return true;
-  }
-  
-  var Afficheur = function(element) {
+}
+
+  function Afficheur(element) {
     var affichage = element;
-  
+
     function setText(message) {
-      affichage.innerHTML = message;
+        affichage.html(message);
     }
-  
+
     return { sendMessage: setText };
-  };
-  
+  }
+
   function main() {
-    var pions = document.querySelectorAll("#Corps_Jeu button");
+    var pions = $("#Corps_Jeu button");
     var joueurs = ["X", "O"];
     var tour = 0;
     var jeuEstFini = false;
-    var afficheur = new Afficheur(document.querySelector("#InfoJeu"));
+    var afficheur = new Afficheur($("#InfoJeu"));
     afficheur.sendMessage(
-      "Le jeu peut commencer ! <br /> Joueur " +
+        "Le jeu peut commencer ! <br /> Joueur " +
         joueurs[tour] +
         " c'est votre tour."
     );
-    for (var i = 0, len = pions.length; i < len; i++) {
-      pions[i].addEventListener("click", function() {
+    pions.on("click", function() {
         if (jeuEstFini) return;
-  
+
         if (!estValide(this)) {
-          afficheur.sendMessage(
-            "Case occupée ! <br />Joueur " +
-              joueurs[tour] +
-              " c'est toujours à vous !"
-          );
-        } else {
-          setSymbol(this, joueurs[tour]);
-          jeuEstFini = rechercherVainqueur(pions, joueurs, tour);
-  
-          if (jeuEstFini) {
             afficheur.sendMessage(
-              "Le joueur " +
+                "Case occupée ! <br />Joueur " +
                 joueurs[tour] +
-                ' a gagné ! <br /> <a href="morpion.html">Rejouer</a>'
+                " c'est toujours à vous !"
             );
-            return;
-          }
-  
-          if (matchNul(pions)) {
-            afficheur.sendMessage(
-              'Match Nul ! <br/> <a href="morpion.html">Rejouer</a>'
-            );
-            return;
-          }
-  
-          tour++;
-          tour = tour % 2;
-          afficheur.sendMessage("Joueur " + joueurs[tour] + " c'est à vous !");
+        } else {
+            setSymbol(this, joueurs[tour]);
+            jeuEstFini = rechercherVainqueur(pions, joueurs, tour);
+
+            if (jeuEstFini) {
+                afficheur.sendMessage(
+                    "Le joueur " +
+                    joueurs[tour] +
+                    ' a gagné ! <br /> <a href="Programme_Principal.html">Rejouer</a>'
+                );
+                return;
+            }
+
+            if (matchNul(pions)) {
+                afficheur.sendMessage(
+                    'Match Nul ! <br/> <a href="Programme_Principal.html">Rejouer</a>'
+                );
+                return;
+            }
+
+            tour++;
+            tour = tour % 2;
+            afficheur.sendMessage("Joueur " + joueurs[tour] + " c'est à vous !");
         }
-      });
-    }
-  }
-  
-  main();
+    });
+}
+
+main();
 });
