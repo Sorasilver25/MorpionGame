@@ -7,6 +7,9 @@ $(document).ready(function() {
     var joueurs = ["X", "O"];
     var tour = 0;
     var jeuEstFini = false;
+    var victoiresX = 0;
+    var victoiresO = 0;
+    var partiesNulles = 0;
 
     function estValide(button) {
         return $(button).html().length === 0;
@@ -57,9 +60,15 @@ $(document).ready(function() {
     });
 
     $("#resetGame").off("click").on("click", function() {
+
+        if (tour==0) {
+         tour = 1;
+        } else {
+            tour = 0;
+        }
+
         pions.html("");
         pions.css("backgroundColor", "");
-        tour = 0;
         jeuEstFini = false;
         afficheur.sendMessage("Le jeu peut recommencer ! <br />" + getNomJoueur(tour, prenomJoueurX, prenomJoueurO) + " c'est votre tour.");
         $(this).attr('style','visibility','hidden !important;');
@@ -92,21 +101,36 @@ $(document).ready(function() {
                 jeuEstFini = rechercherVainqueur(pions, joueurs, tour);
 
                 if (jeuEstFini) {
+
+                    if (joueurs[tour] === 'X') {
+                        victoiresX++;
+                    } else {
+                        victoiresO++;
+                    }
                     afficheur.sendMessage(getNomJoueur(tour, prenomJoueurX, prenomJoueurO) +' a gagné !');
                     $('#resetGame').attr('style','visibility:initial !important;');
+                    updateStats();
                     return;
                 }
 
                 if (matchNul(pions)) {
                     afficheur.sendMessage('Match Nul ! <br/>');
                     $('#resetGame').attr('style','visibility:initial !important;');
+                    partiesNulles++;
+                    updateStats();
                     return;
                 }
 
-                tour = (tour + 1) % 2; // Alterner entre les joueurs X et O
+                tour = (tour + 1) % 2;
                 afficheur.sendMessage( getNomJoueur(tour, prenomJoueurX, prenomJoueurO) + " c'est à vous !");
             }
         });
+    }
+
+    function updateStats() {
+        $("#victoiresX").html("Victoires <br>" + victoiresX);
+        $("#victoiresO").html("Victoires <br>" + victoiresO);
+        $("#partiesNulles").html("Parties Nulles <br>" + partiesNulles);
     }
 
     main();
