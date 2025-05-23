@@ -10,13 +10,21 @@ $(document).ready(function() {
     var victoiresX = 0;
     var victoiresO = 0;
     var partiesNulles = 0;
+    const svgX = `<img src="assets/radix-icons--cross-2.svg" alt="X" class="svg-symbol" id="cross" draggable="false" data-symbol="X">`;
+    const svgO = `<img src="assets/akar-icons--circle.svg" alt="O" class="svg-symbol" id="circle" draggable="false" data-symbol="O">`;
 
     function estValide(button) {
-        return $(button).html().length === 0;
+        return !$(button).attr("data-symbol");
     }
 
     function setSymbol(btn, symbole) {
-        $(btn).html(symbole);
+        if (symbole === "X") {
+            $(btn).html(svgX);
+            $(btn).attr("data-symbol", "X");
+        } else if (symbole === "O") {
+            $(btn).html(svgO);
+            $(btn).attr("data-symbol", "O");
+        }
     }
 
     function rechercherVainqueur(pions, joueurs, tour) {
@@ -29,13 +37,13 @@ $(document).ready(function() {
         for (const combination of combinations) {
             const [a, b, c] = combination;
             if (
-                $(pions[a]).html() == joueurs[tour] &&
-                $(pions[b]).html() == joueurs[tour] &&
-                $(pions[c]).html() == joueurs[tour]
+                $(pions[a]).attr("data-symbol") == joueurs[tour] &&
+                $(pions[b]).attr("data-symbol") == joueurs[tour] &&
+                $(pions[c]).attr("data-symbol") == joueurs[tour]
             ) {
-                $(pions[a]).css("backgroundColor", "#9ACD32");
-                $(pions[b]).css("backgroundColor", "#9ACD32");
-                $(pions[c]).css("backgroundColor", "#9ACD32");
+                $(pions[a]).css("backgroundColor", "#2b2b2b95");
+                $(pions[b]).css("backgroundColor", "#2b2b2b95");
+                $(pions[c]).css("backgroundColor", "#2b2b2b95");
                 return true;
             }
         }
@@ -69,6 +77,7 @@ $(document).ready(function() {
 
         pions.html("");
         pions.css("backgroundColor", "");
+        pions.removeAttr("data-symbol");
         jeuEstFini = false;
         afficheur.sendMessage("Le jeu peut recommencer ! <br />" + getNomJoueur(tour, prenomJoueurX, prenomJoueurO) + " c'est votre tour.");
         $(this).attr('style','visibility','hidden !important;');

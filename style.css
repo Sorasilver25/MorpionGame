@@ -1,0 +1,289 @@
+html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background-color: #4158D0;
+  background-image: linear-gradient(90deg, #000000 0%, #000000 50%, #000000 100%);
+  text-align: center;
+  width:99%;
+  height: 97%;
+}
+
+#partiesNulles {
+  margin-top: 20px;
+  font-size: 2.5rem;
+}
+
+.Bloc_Central {
+  width: 100%;
+  height: 75%;
+  display: inline-flex;
+}
+
+.BlocGauche, .BlocDroite {
+    width: 30%;
+    padding-top: 140px;
+}
+
+.BlocMilieu {
+  width: 40%;
+  display: inline-grid;
+}
+
+#victoiresO,#victoiresX, #partiesNulles {
+  font-family: 'Press Start 2P', cursive;
+  font-weight: bold;
+}
+
+#victoiresX{
+  color: #ff4f4f;
+  text-shadow: 0 0 5px #ff4f4f, 0 0 10px #ff4f4f, 0 0 20px #ff0000, 0 0 40px #ff0000;
+  font-size: 3rem;
+}
+
+#victoiresO{
+  color: #4f64ff;
+  text-shadow: 0 0 5px #4f64ff, 0 0 10px #4f64ff, 0 0 20px #4f64f0, 0 0 40px #4f64f0;
+  font-size: 3rem;
+}
+
+#partiesNulles, h1{
+  color: #ffffff;
+  text-shadow: 0 0 5px #ffffff, 0 0 40px #ffffff;
+}
+
+.BlocRejouer {
+  height: 18%;
+  width: 100%;
+  justify-content: center;
+  display: inline-flex;
+  align-items: center;
+}
+
+.SecondJoueur {
+  padding: 10px;
+  justify-content: start;
+  align-items: start;
+  display: flex;
+  position: relative;
+  left: 35px;
+  margin: 5px;
+  margin-top: 25px;
+}
+
+.PremierJoueur {
+  padding: 10px;
+  justify-content: end;
+  align-items: end;
+  display: flex;
+  position: relative;
+  left: -35px;
+  margin: 5px;
+  margin-top: 25px;
+}
+
+#Corps_Jeu {
+  display: inline-block;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #000000;
+}
+  
+#Corps_Jeu .gridline {
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+}
+
+.gridline div{
+  position: relative;
+}
+  
+#Corps_Jeu button, #Corps_Jeu span {
+  width: 115px;
+  height: 115px;
+  font-weight: bold;
+  font-size: 50px;
+  float:left;
+  background-color: black;
+  border: none;
+}
+  
+#InfoJeu {
+  color: black;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 20px;
+  width: auto;
+  display: block;
+  height: 50px;
+  justify-content: center;
+  display: grid;
+  align-items: center;
+}
+
+.left::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background-color: #c4c4c4;
+  box-shadow: 0 0 10px #c4c4c4, 0 0 20px #c4c4c4;
+}
+
+.right::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 2px;
+  background-color: #c4c4c4;
+  box-shadow: 0 0 10px #c4c4c4, 0 0 20px #c4c4c4;
+}
+
+.top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #c4c4c4;
+  box-shadow: 0 0 10px #c4c4c4, 0 0 20px #c4c4c4;
+}
+
+.bottom::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #c4c4c4;
+  box-shadow: 0 0 10px #c4c4c4, 0 0 20px #c4c4c4;
+}
+
+h1 {
+  font-family: 'Press Start 2P', cursive;
+  color: black;
+  font-size: 3rem;
+}
+
+button#resetGame {
+  width: 120px;
+  height: 34px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  padding-top: 10px;
+}
+
+@keyframes blinkNeon {
+  0%, 100% {
+    color: #4fdfff;
+    text-shadow:
+      0 0 5px #4fdfff,
+      0 0 10px #4fdfff,
+      0 0 20px #00ccff;
+    transform: scale(1);
+  }
+  33% {
+    color: #ff4f4f;
+    text-shadow:
+      0 0 5px #ff4f4f,
+      0 0 10px #ff4f4f,
+      0 0 20px #ff0000;
+    transform: scale(1.3);
+  }
+  66% {
+    color: #111;
+    text-shadow: none;
+    transform: scale(1);
+  }
+}
+
+#resetGame {
+  animation: blinkNeon 2s infinite ease-in-out;
+  background-color: #000;
+  border: 2px solid #000;
+  padding: 12px 28px;
+  font-size: 18px;
+  cursor: pointer;
+  visibility: hidden;
+  position: relative;
+  font-weight: bold;
+  font-family: 'Segoe UI', sans-serif;
+  text-transform: uppercase;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+  font-size: 1.5rem;
+}
+
+.SectionPrenom {
+  justify-content: end;
+  align-items: end;
+  /* display: flex; */
+  display: none;
+  visibility: hidden;
+}
+
+.SectionPrenom input {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  position: relative;
+}
+
+#SectionPrenom {
+  justify-content: start;
+}
+
+#prenomJoueurX {
+  background-color: black; 
+  color: white;
+}
+
+#prenomJoueurO {
+  background-color: black;
+  color:white;
+}
+
+*{
+  color: white !important;
+  user-select: none;
+}
+
+.svg-symbol {
+    display: block;
+    margin: auto;
+    pointer-events: none;
+    user-select: none;
+    width:60px;
+    height:60px;
+}
+
+#cross {
+  width: 70px;
+  height: 70px;
+  fill: red;
+  filter: drop-shadow(0 0 5px red)
+          drop-shadow(0 0 10px red)
+          drop-shadow(0 0 20px #ff1a1a);
+}
+
+#circle {
+  fill: blue;
+  filter: drop-shadow(0 0 5px #00ccff)
+          drop-shadow(0 0 10px #00ccff)
+          drop-shadow(0 0 20px #4fdfff);
+}
