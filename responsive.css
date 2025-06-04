@@ -1,0 +1,160 @@
+@media screen and (max-width: 768px) {
+  body {
+    width: 100%;
+    height: 100vh;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+  }
+
+  .Bloc_Central {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+  }
+
+  .BlocGauche, .BlocDroite {
+    width: 100%;
+    padding-top: 0;
+    order: 2;
+  }
+
+  .BlocMilieu {
+    width: 100%;
+    order: 1;
+  }
+
+  .PremierJoueur, .SecondJoueur {
+    justify-content: center;
+    left: 0;
+    margin: 10px 0;
+  }
+
+  #victoiresX, #victoiresO {
+    font-size: 1.5rem;
+  }
+
+  #partiesNulles {
+    font-size: 1.2rem;
+    margin-top: 10px;
+  }
+
+  #Corps_Jeu {
+    padding: 5px;
+    margin: 50px auto;
+  }
+
+  #Corps_Jeu button {
+    width: 100px;
+    height: 100px;
+    font-size: 45px;
+  }
+
+  .svg-symbol {
+    width: 45px;
+    height: 45px;
+  }
+
+  #cross {
+    width: 50px;
+    height: 50px;
+  }
+
+  #InfoJeu {
+    font-size: 16px;
+    height: 40px;
+    padding: 5px;
+  }
+
+  .BlocRejouer {
+    height: auto;
+    margin: 10px 0;
+  }
+
+  #resetGame {
+    font-size: 1rem;
+    padding: 8px 20px;
+    width: auto;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  #Corps_Jeu button {
+    width: 100px;
+    height: 100px;
+    font-size: 30px;
+  }
+
+  .svg-symbol {
+    width: 40px;
+    height: 40px;
+  }
+
+  #cross {
+    width: 45px;
+    height: 45px;
+  }
+
+  #victoiresX, #victoiresO {
+    font-size: 1.2rem;
+  }
+
+  #partiesNulles {
+    font-size: 1rem;
+  }
+
+  #InfoJeu {
+    font-size: 14px;
+  }
+
+  #resetGame {
+    font-size: 0.9rem;
+    padding: 6px 16px;
+  }
+}
+
+/* Landscape mode pour petits écrans */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .Bloc_Central {
+    flex-direction: row;
+    height: 100vh;
+  }
+
+  .BlocGauche, .BlocDroite {
+    width: 25%;
+    padding-top: 20px;
+  }
+
+  .BlocMilieu {
+    width: 50%;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+    margin: 5px 0;
+  }
+
+  #Corps_Jeu button {
+    width: 60px;
+    height: 60px;
+  }
+
+  .svg-symbol {
+    width: 35px;
+    height: 35px;
+  }
+
+  #cross {
+    width: 40px;
+    height: 40px;
+  }
+}
